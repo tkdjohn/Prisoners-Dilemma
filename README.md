@@ -16,10 +16,11 @@ You will have between five and fifteen chances to try and outwit the computer. F
 ### Can you outwit the computer and achieve the higher score? 
 
 -----
+TODO: get negative and positive and multi digit scores to line up better.
 TODO: add more fun 'color text' (like the interrogation text)
 TODO: move scoring to a something we can easily edit (here in the readme) but also load as "settings" in the program.
 TODO: provide description of code structure and implementation of features here. 
-TODO: print scores and declare a winner at the end of a game
+
 TODO: implement at least one more strategy (something better than Random!)
 TODO: (stretch) record the moves and final scores in a data file 
     - convert each round's score/moves data into a data object (round # computer choice, player choice) 
