@@ -4,6 +4,12 @@ random.seed()
 PLAYER = 0
 COMPUTER = 1
 
+#TODO: populate the scoring matrix from the from the README
+scoring_matrix = { ('c', 'c') : ( 0,  0),
+                   ('c', 's') : ( 2, -5),
+                   ('s', 'c') : (-5,  2),
+                   ('s', 's') : (-2, -2) }
+
 def Print_Introduction():
     readme = ''
     with open('README.md', 'r') as f:
@@ -21,14 +27,11 @@ def Get_Choice_Description(choice):
     else:
         return "stay silent"
 
-#TODO: populate the scoring matrix from the from the README
-scoring_matrix = { ('c', 'c') : ( 0,  0),
-                   ('c', 's') : ( 2, -5),
-                   ('s', 'c') : (-5,  2),
-                   ('s', 's') : (-2, -2) }
-
 def Calc_Score(choice, bonus):
-    scores = scoring_matrix[(choice[PLAYER], choice[COMPUTER])]
+    # Use 0 an 1 instead of PLAYER and COMPUTER here because 
+    # this function should return the scores in the same order
+    # as the choices, without need to know which is which.
+    scores = scoring_matrix[(choice[0], choice[1])]
     return [a + b for a, b in zip(scores, bonus)]
 
 def Get_Computer_Choice():
@@ -49,7 +52,7 @@ def Get_Player_Choice():
     # appropriately, assume they choose not to confess.
     if choice not in ('c', 's'):
         print ("The mentor looks at you even more sternly and shakes their head.")
-        print (f"The voice states flatly, 'You had your chance.'")
+        print (f"The voice states flatly, 'Not choosing is still choosing. You had your chance.'")
         choice = 's'
     
     return choice
@@ -62,41 +65,42 @@ def Report_Round(choice, score):
         print (f'Your Opponent: {score[COMPUTER]}') 
         print ()
 
-def Handle_Choices( bonus, bonus_activated,):
-    choice = [Get_Player_Choice(),  Get_Computer_Choice()]
+def Get_Choices(bonus):
+    # Assign individual choices based on the index set in the constants. This way
+    # we don't have to keep track of which index is the player and which is the computer.
+    choice = []
+    choice[PLAYER] = Get_Player_Choice()
+    choice[COMPUTER] = Get_Computer_Choice()
 
     if (choice[PLAYER] == 'bonus'):
-        if (bonus_activated):
+        if bonus[PLAYER] > 0 or bonus[COMPUTER] > 0:
             print("The voice says, 'The only thing worse than a cheat is a greedy cheat.'")
             choice[PLAYER] = 's'
             choice[COMPUTER] = 'c'
             bonus[PLAYER] = 0
-            bonus[COMPUTER] += 1
+            bonus[:COMPUTER] += 1
         else:
-            bonus_activated = True
-            print("The voice says, 'A wise choice.'")
+            print("The voice says, 'A full written confession, a wise choice.'")
             choice[PLAYER] = 'c'
             bonus[PLAYER] = 2
-    return (choice, bonus, bonus_activated)
+
+    return (choice, bonus)
 
 def Play():
     # Random number of rounds to help keep players guessing
     rounds_left = random.randint(5, 15)
-    
-    # Reset for a new round
     running_score = [0,0] 
-    bonus_activated = False
-    bonus = [0,0]
+    bonuses = [0,0]
 
     while (rounds_left > 0):
-        (choice, bonus, bonus_activated) = Handle_Choices(bonus, bonus_activated)
-
-        score = Calc_Score(choice, bonus)
+        (choices, bonuses) = Get_Choices(bonuses)
+        round_score = Calc_Score(choices, bonuses)
 
         # Shortcut to add the values in scores to running scores.
-        running_score = [a + b for a, b in zip(running_score, score)]
-        Report_Round(choice, running_score)
+        running_score = [a + b for a, b in zip(running_score, round_score)]
+        Report_Round(choices, running_score)
         rounds_left -= 1
+
     return running_score
 
 def Report_Game(scores):
