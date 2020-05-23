@@ -1,8 +1,11 @@
 import random
+import Computer
+
 random.seed()
 
 PLAYER = 0
 COMPUTER = 1
+SECRET_BONUS_WORD = 'idkfa'
 
 #TODO: populate the scoring matrix from the from the README
 scoring_matrix = { ('c', 'c') : ( 0,  0),
@@ -45,7 +48,7 @@ def Get_Player_Choice():
         "Do you (c)onfess or will you stay (s)ilent?' "
     choice = input(prompt).lower()
 
-    if choice == 'idkfa':
+    if choice == SECRET_BONUS_WORD:
        return "bonus"
 
     # The mentors have little patience for stall tactics. If player doesn't respond 
@@ -68,7 +71,7 @@ def Report_Round(choice, score):
 def Get_Choices(bonus):
     # Assign individual choices based on the index set in the constants. This way
     # we don't have to keep track of which index is the player and which is the computer.
-    choice = []
+    choice = ['', '']
     choice[PLAYER] = Get_Player_Choice()
     choice[COMPUTER] = Get_Computer_Choice()
 
@@ -117,7 +120,8 @@ Print_Introduction()
 play_again = 'a'
 while True:
     if play_again == 'a':
-        Report_Game(Play())
+        results = Play()
+        Report_Game(results)
     elif play_again == 'r':
         Print_Introduction()
     else:
