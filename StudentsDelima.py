@@ -8,6 +8,7 @@ C_PLR_NUM = 1
 random.seed()
 
 #TODO: populate the scoring matrix from the from the README
+# and do this with regular expresions! 
 Scoring_Matrix = { ('c', 'c') : ( 0,  0),
                    ('c', 's') : ( 2, -5),
                    ('s', 'c') : (-5,  2),

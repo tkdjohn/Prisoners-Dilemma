@@ -4,7 +4,7 @@ class Computer_Player:
     '''Represents the computer player.'''
   
     Runing_Score = 0
-    
+
     def Choose(self, available_choices):
         return self.__choose_method_(available_choices)
 
@@ -14,8 +14,11 @@ class Computer_Player:
         
     def __init__(self, player_number, opponent_player_number):
         random.seed()
+
+        #TODO: set choose method randomly
         self.__choose_method_ = self.__Tit_for_That_
         #self.__choose_method_ = self.__Random_
+        
         self.Player_Number = player_number
         self.Opponent_Player_Number = opponent_player_number
 

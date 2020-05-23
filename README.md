@@ -18,7 +18,7 @@ You will have between five and fifteen chances to try and outwit the computer. F
 -----
 TODO: get negative and positive and multi digit scores to line up better.
 
-TODO: move scoring to something we can easily edit (here in the readme?) but also load as "settings" in the program.
+TODO: move scoring matrix to something we can easily edit (here in the readme?) but also load as "settings" in the program.
 TODO: provide description of code structure and implementation of features here. 
 
 TODO: (stretch) record the moves and final scores in a data file 
