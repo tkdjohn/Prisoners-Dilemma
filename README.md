@@ -1,19 +1,17 @@
 # Student's Dilemma
 
-You and a fellow **CodeLouisville** student (played by the computer) both been caught cheating on your final project, however it isn't clear whether one of you plagiarized the other's project or if you conspired together. In an effort to uncover the whole truth, you are both being interrogated. During interrogation you both have are offered a simple choice: confess or stay silent. 
+You and a fellow student (played by the computer) have been caught cheating on your final project, however it isn't clear whether one of you plagiarized the other's project or if you conspired together. In an effort to uncover the whole truth, you are both being interrogated. During interrogation you both have are offered a simple choice: confess or stay silent. 
 
 However, there are conditions:
-- If you both confess: Since you both came clean, you will be permitted to submit a new project by the class deadline otherwise you will fail, but you will be allowed to take the course again. (2 points)
-- If one of you confesses and the other does not. It is assumed that the student who confesses must have plagiarized the other student's work without consent:    
-    - The student who confesses will be expelled from the program, banned for life, and worst of all, will receive a red X on their permanent record. (-3 points).  
-    - The student who stays silent is deemed an unknowing victim and will have their final project graded as normal. (3 points). 
-- If you both stay silent: You will both fail the class and but will be allowed to take the course again, after a 1 year suspension, you will not be expelled from the program, and, thankfully, will avoid the dreaded red X on your permanent record. (-1 points)
+- If you both confess (2 points): Since you both came clean, you will be permitted to submit a new project by the class deadline otherwise you will fail, but you will be allowed to take the course again. 
+- If one confesses (-3 points) and one stays silent (3 points). It is assumed that the student who confesses must have plagiarized the other student's work without consent:    
+    - The student who confesses will be expelled from the program, banned for life, and worst of all, **will receive a red X on their permanent record**.
+    - The student who stays silent is deemed an unknowing victim and will have their final project graded as normal.
+- If you both stay silent (-1 points): You will both fail the class and but will be allowed to take the course again, after a 1 year suspension, you will not be expelled from the program, and, thankfully, will avoid the dreaded red X on your permanent record.
 
-You will have between five and fifteen chances to try and outwit the computer. For the purposes of the game, each possible outcome is awarded a numeric point value (in parentheses  above).
------
+But there's more! You are also stuck in a time loop, giving you a Groundhog Day experience where you repeat this exercise a number of times. But beware, somehow due to the Great Mystic forces of the Computer gods, you are not quite starting over each day... your actions add up over the course of five to fifteen chances! 
 
-### Can you outwit the computer and achieve the higher score? 
-
+### Can you outwit the computer and achieve the higher score? Can you find a way to work with the computer to maximize both your scores? Can you discover the rumored secret to success in playing video games?
 -----
 TODO: move scoring matrix to something we can easily edit (here in the readme?) but also load as "settings" in the program. maybe use regex to pull this off?
 TODO: provide description of code structure and implementation of features here. 

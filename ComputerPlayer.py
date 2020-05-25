@@ -1,7 +1,7 @@
 import random
-import Constants as const
+import Settings
 
-class Computer_Player:
+class Computer_Player(object):
     '''Represents a computer player.'''
     
     @property
@@ -50,7 +50,7 @@ class Computer_Player:
         ##self.__choose_method_ = self. __risk_analysis_highest_personal_score_
 
         self.__opponent_previous_choice_ = None
-        self._most_recent_choice = const.Choices.confess
+        self._most_recent_choice = Settings.Choices.confess
         self.__opponent_score_ = 0
     
     ############################ strategy methods 
@@ -58,14 +58,14 @@ class Computer_Player:
     # This strategy's strong suit is that the opponent is unlikely to be able
     # to predict the computer's choice. However, it will not consistently perform 
     def __random_(self):
-        return random.choice(const.Choices.list())
+        return random.choice(Settings.Choices.list())
     
     # This strategy will generally tie with the opponent simply because it attempts
     # to provide feedback to the opponent in the hopes that the opponent will realize
     # that both confessing is the better choice.
     def __tit_for_that_(self):
         if self.__opponent_previous_choice_ is None:
-            self.__opponent_previous_choice_ = const.Choices.stay_silent
+            self.__opponent_previous_choice_ = Settings.Choices.stay_silent
         return self.__opponent_previous_choice_
 
     # This strategy can achieve both the hightest and lowest scores, depending 
@@ -73,10 +73,10 @@ class Computer_Player:
     # See the comments for the __risk_analysis_highest_personal_score_ strategy
     # below for information on why.
     def __always_confess_(self):
-        return const.Choices.confess
+        return Settings.Choices.confess
 
     def __always_stay_silent_(self):
-        return const.Choices.stay_silent
+        return Settings.Choices.stay_silent
 
     def __alternate_(self):
         return self._most_recent_choice.next()
@@ -104,15 +104,15 @@ class Computer_Player:
         risk_reward = dict()
         final_choice = None
         final_avg_pts = 0
-        for c_choice in const.Choices:
+        for c_choice in Settings.Choices:
             points = 0
             # We could maybe be smarter here, but for now just average the
             # points we might receive for this choice 
-            for p_choice in const.Choices:
-                scores = const.Calc_Score(p_choice, c_choice)
+            for p_choice in Settings.Choices:
+                scores = Settings.Get_Score(p_choice, c_choice)
                 points += scores[1]
             
-            avg_pts = points/len(const.Choices)
+            avg_pts = points/len(Settings.Choices)
             if final_choice == None or avg_pts > final_avg_pts:
                 final_choice = c_choice
                 final_avg_pts = avg_pts
@@ -139,11 +139,11 @@ class Computer_Player:
     # The winning choice is obvious.
     def __risk_analysis_competition_(self):
         risk_reward = dict()
-        for c_choice in const.Choices:
+        for c_choice in Settings.Choices:
             risk = 0
             reward = 0
-            for p_choice in const.Choices:
-                scores = const.Calc_Score(p_choice, c_choice)
+            for p_choice in Settings.Choices:
+                scores = Settings.Get_Score(p_choice, c_choice)
                 spread = scores[1] - scores[0]
                 # find largest reward for this c_choice (by def rewards are > 0)
                 if spread > 0 and spread > reward:

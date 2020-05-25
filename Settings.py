@@ -37,12 +37,26 @@ class Choices(Enum):
         return members[index]
 
 #TODO: populate the scoring matrix from the from the README using regular expresions! 
-SCORING_MATRIX = { 
+__scoring_matrix_ = { 
     (Choices.confess, Choices.confess)          : ( 2,  2),
     (Choices.confess, Choices.stay_silent)      : (-3,  3),
     (Choices.stay_silent, Choices.confess)      : ( 3, -3),
     (Choices.stay_silent, Choices.stay_silent)  : (-1, -1) }
 
-def Calc_Score(p_choice, c_choice):
-    return SCORING_MATRIX[(p_choice, c_choice)]
-    
+Rules = 'The rules have not been loaded!!'
+
+def Get_Score(p_choice, c_choice):
+    return __scoring_matrix_[(p_choice, c_choice)]
+
+def Load():
+    global Rules
+    with open('README.md', 'r') as settings_file:
+        Rules = __load_rules_(settings_file)
+
+def __load_rules_(settings_file):
+    rules = ''
+    for line in settings_file:
+        if line[0:5] == '-----':
+            break;
+        rules += line
+    return rules

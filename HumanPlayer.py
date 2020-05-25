@@ -1,5 +1,5 @@
-import Constants as const
-class Human_Player:
+import Settings 
+class Human_Player(object):
     '''Represents a human player.'''
 
     @property
@@ -20,21 +20,21 @@ class Human_Player:
             "praises the wisdom of your mentors, extolls the virtues of this wonderful program, and "\
             "includes a commitment to become a mentor after graduation."
         if (value <= 0):
-            print(f"{preamble} Flattery and bribery again?! The only thing worse"\
-                  " than a cheater is a greedy cheater.'")
+            self.Report(f"{preamble} Flattery and bribery again?! The only thing worse"\
+                         " than a cheater is a greedy cheater.'")
         else:
-            print(f"{preamble} A most excellent choice.'")
+            self.Report(f"{preamble} A most excellent choice.'")
 
     def Choose(self):
         choices_string = ''
-        choices_left = len(const.Choices)
-        for choice in const.Choices:
+        choices_left = len(Settings.Choices)
+        for choice in Settings.Choices:
             choices_left -= 1
             choices_string += f' {choice} ({choice.value})'
             if (choices_left > 0):
                 choices_string  += ' or'
  
-        choice = input('You are seated in a dark room with a bright light shining in your face. A mentor looms over you, looking stern. ' \
+        choice = self.Prompt('You are seated in a dark room with a bright light shining in your face. A mentor looms over you, looking stern. ' \
             "The mentor's mouth does not move, yet you hear a commanding voice say, 'Your classmate has already been interrogated. " \
             f"Do you{choices_string}? ").lower()
 
@@ -45,45 +45,47 @@ class Human_Player:
         self.__opponent_score_ += opponent_round_score
         self._score += round_score
 
-        print (f'You chose to {self._most_recent_choice} for {round_score} points.')
-        print (f'Your classmate chose to {opponent_choice} for {opponent_round_score} points.')
-        print (f'=========== Scores ===========')
-        print (f'          You: {self._score}') 
-        print (f'Your Opponent: {self.__opponent_score_}') 
-        print ()
+        self.Report(f'You chose to {self._most_recent_choice} for {round_score} points.')
+        self.Report(f'Your classmate chose to {opponent_choice} for {opponent_round_score} points.')
+        self.Report(f'=========== Scores ===========')
+        self.Report(f'          You: {self._score}') 
+        self.Report(f'Your Opponent: {self.__opponent_score_}') 
+        self.Report('')
 
     def End_Game(self):
         win_lose = "You failed to outwit the computer!"
         if self._score > self.__opponent_score_:
             win_lose = "Congratulations, you outsmarted the computer!"
-        print ('=========== GAME OVER ===========')
-        print ('          You: {: >3d}'.format(self._score)) 
-        print ('Your Opponent: {: >3d}'.format(self.__opponent_score_))
-        print (win_lose)
-        print ('=========== GAME OVER ===========')
+        self.Report('=========== GAME OVER ===========')
+        self.Report ('          You: {: >3d}'.format(self._score)) 
+        self.Report ('Your Opponent: {: >3d}'.format(self.__opponent_score_))
+        self.Report (win_lose)
+        self.Report ('=========== GAME OVER ===========')
 
-    def Show_Rules(self):
-        print(self.__rules_)
+    def Report(self, text):
+        print(text)
 
-    def __init__(self,  rules):
+    def Prompt(self, prompt):
+        return input(prompt)
+
+    def __init__(self):
         self._score = 0
         self._bonus = 0
         self.__opponent_score_ = 0 
         self.__secret_bonus_word = 'idkfa'
-        self.__rules_ = rules
 
     def __validate_choice_(self, choice):
         activate_bonus = False
         if choice == self.__secret_bonus_word:
-            choice= const.Choices.confess
+            choice= Settings.Choices.confess
             activate_bonus = True
-        elif choice not in (const.Choices.values_list()):
+        elif choice not in (Settings.Choices.values_list()):
 
             # The mentors have little patience for stall tactics. If player doesn't respond 
             # appropriately, assume they choose not to confess.
             print ("The mentor looks at you even more stern and shakes their head."\
                 " The voice states flatly, 'Not choosing is still making a choice.'")
-            choice = const.Choices.stay_silent
+            choice = Settings.Choices.stay_silent
         else:
-            choice = const.Choices(choice)
+            choice = Settings.Choices(choice)
         return choice, activate_bonus

@@ -1,33 +1,19 @@
 import random
-import Constants 
+import Settings
 import ComputerPlayer as cp
 import HumanPlayer as hp
-
-def Load_Settings():
-    with open('README.md', 'r') as settings_file:
-        rules = __load_rules_(settings_file)
-
-    return (rules)
-
-def __load_rules_(settings_file):
-    rules = ''
-    for line in settings_file:
-        if line[0:5] == '-----':
-            break;
-        rules += line
-    return rules
 
 def Calc_Score(trigger_p_bonus, trigger_c_bonus):
     if (trigger_p_bonus):
         if Player.Bonus> 0 or Computer.Bonus > 0:
-            Computer.Most_Recent_Choice = Constants.Choices.stay_silent
+            Computer.Most_Recent_Choice = Settings.Choices.stay_silent
             Player.Set_Bonus(0)
             Computer.Set_Bonus(Computer.Bonus + 1)
         else:
-            Computer.Most_Recent_Choice = Constants.Choices.confess
+            Computer.Most_Recent_Choice = Settings.Choices.confess
             Player.Set_Bonus(1)
 
-    scores = Constants.Calc_Score(Player.Most_Recent_Choice, Computer.Most_Recent_Choice)
+    scores = Settings.Get_Score(Player.Most_Recent_Choice, Computer.Most_Recent_Choice)
     bonuses = (Player.Bonus, Computer.Bonus)
     round_totals = [a + b for a, b in zip(scores, bonuses)]
     return round_totals[0], round_totals[1]
@@ -54,21 +40,21 @@ def End_Game():
 
 ####### Initialize #######
 random.seed()
-Rules = Load_Settings()
 play_again = 'r'
+Settings.Load()
 
 ####### MAIN Loop ########
 while True:
     Computer = cp.Computer_Player()
-    Player = hp.Human_Player(Rules)
+    Player = hp.Human_Player()
 
     if play_again == 'r':
-        Player.Show_Rules()
+        Player.Report(Settings.Rules)
     elif play_again == 'p':
         Play()
     else:
         break;
 
     print() 
-    play_again = input('Choose play (p), show rules (r), or press any key to quit> ').lower()
+    play_again = Player.Prompt('Choose play (p), show rules (r), or press any key to quit> ').lower()
 
