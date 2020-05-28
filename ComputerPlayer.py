@@ -27,12 +27,12 @@ class Computer_Player(object):
         self._most_recent_choice = self.__choose_method_()
         return False 
 
-    def Update_Results(self, round_score, opponent_round_score, opponent_choice):
+    def Report_Round(self, round_score, opponent_round_score, opponent_choice):
         self.__opponent_previous_choice_ = opponent_choice
         self.__opponent_score_ += opponent_round_score
         self._score += round_score
 
-    def End_Game(self):
+    def Report_End_Game(self):
         #TODO: record statistics
         return
         
