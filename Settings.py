@@ -66,10 +66,11 @@ def __parse_rules(rules):
     x = re.compile('(both|one) (confess(e?s?)|stay(s?) silent) \((-?\d*) points\)')
     y = x.findall(Rules)
     for z in y:
-        both_confess_points =  z[4] if z[0:2] == ('both', 'confess')  else both_confess_points
-        one_confess_points =  z[4] if z[0:2] == ('one', 'confesses')  else one_confess_points
-        one_stay_silent_points = z[4] if z[0:2] == ('one', 'stays silent')  else one_stay_silent_points
-        both_stay_silent_points = z[4] if z[0:2] == ('both', 'stay silent')  else both_stay_silent_points
+        
+        both_confess_points = int(z[4]) if z[0:2] == ('both', 'confess')  else both_confess_points
+        one_confess_points = int(z[4]) if z[0:2] == ('one', 'confesses')  else one_confess_points
+        one_stay_silent_points = int(z[4]) if z[0:2] == ('one', 'stays silent')  else one_stay_silent_points
+        both_stay_silent_points = int(z[4]) if z[0:2] == ('both', 'stay silent')  else both_stay_silent_points
     __scoring_matrix_ = { 
         (Choices.confess, Choices.confess)          : (both_confess_points, both_confess_points),
         (Choices.confess, Choices.stay_silent)      : (one_confess_points,  one_stay_silent_points),

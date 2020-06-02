@@ -41,7 +41,7 @@ class Human_Player(object):
         self._most_recent_choice, trigger_bonus = self.__validate_choice_(choice)
         return trigger_bonus
 
-    def Report_Round(self, round_score, opponent_round_score, opponent_choice):
+    def Update_Results(self, round_score, opponent_round_score, opponent_choice):
         self.__opponent_score_ += opponent_round_score
         self._score += round_score
 
@@ -52,7 +52,7 @@ class Human_Player(object):
         self.Report(f'Your Opponent: {self.__opponent_score_}') 
         self.Report('')
 
-    def Report_End_Game(self):
+    def End_Game(self):
         win_lose = "You failed to outwit the computer!"
         if self._score > self.__opponent_score_:
             win_lose = "Congratulations, you outsmarted the computer!"

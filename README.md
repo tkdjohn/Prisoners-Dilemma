@@ -13,6 +13,8 @@ But there's more! You are also stuck in a time loop, giving you a Groundhog Day 
 
 ### Can you outwit the computer and achieve the higher score? Can you find a way to work with the computer to maximize both your scores? Can you discover the rumored secret to success in playing video games?
 -----
+This project implements classes. See the files ComputerPlayer.py and HumanPlayer.py which implement the classes ComputerPlayer and Human player respectively.
+
 TODO: move scoring matrix to something we can easily edit (here in the readme?) but also load as "settings" in the program. maybe use regex to pull this off?
 TODO: provide description of code structure and implementation of features here. 
 TODO: provide some way to select computer strategies 

@@ -5,6 +5,7 @@ import HumanPlayer as hp
 
 def Calc_Score(trigger_p_bonus, trigger_c_bonus):
     if (trigger_p_bonus):
+        # the only way the computer bonus gets set is in this code
         if Player.Bonus> 0 or Computer.Bonus > 0:
             Computer.Most_Recent_Choice = Settings.Choices.stay_silent
             Player.Set_Bonus(0)
@@ -15,6 +16,7 @@ def Calc_Score(trigger_p_bonus, trigger_c_bonus):
 
     scores = Settings.Get_Score(Player.Most_Recent_Choice, Computer.Most_Recent_Choice)
     bonuses = (Player.Bonus, Computer.Bonus)
+    print(f"scores {scores}  bonuses {bonuses}")
     round_totals = [a + b for a, b in zip(scores, bonuses)]
     return round_totals[0], round_totals[1]
 
