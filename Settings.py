@@ -39,10 +39,10 @@ class Choices(Enum):
 
 #set default scoring matrix
 __scoring_matrix_ = { 
-    (Choices.confess, Choices.confess)          : ( 2,  2),
-    (Choices.confess, Choices.stay_silent)      : (-3,  3),
-    (Choices.stay_silent, Choices.confess)      : ( 3, -3),
-    (Choices.stay_silent, Choices.stay_silent)  : (-1, -1) 
+    (Choices.confess, Choices.confess)          : ( 1,  1),
+    (Choices.confess, Choices.stay_silent)      : (-1,  2),
+    (Choices.stay_silent, Choices.confess)      : ( 2, -1),
+    (Choices.stay_silent, Choices.stay_silent)  : ( 0,  0) 
 }
 
 Rules = 'The rules have not been loaded!!'
@@ -66,11 +66,16 @@ def __parse_rules(rules):
     x = re.compile('(both|one) (confess(e?s?)|stay(s?) silent) \((-?\d*) points\)')
     y = x.findall(Rules)
     for z in y:
-        
-        both_confess_points = int(z[4]) if z[0:2] == ('both', 'confess')  else both_confess_points
-        one_confess_points = int(z[4]) if z[0:2] == ('one', 'confesses')  else one_confess_points
-        one_stay_silent_points = int(z[4]) if z[0:2] == ('one', 'stays silent')  else one_stay_silent_points
-        both_stay_silent_points = int(z[4]) if z[0:2] == ('both', 'stay silent')  else both_stay_silent_points
+        try:
+            points = int(z[4])
+        except ValueError:
+            print ("Unable to load settings, using defaults.")
+
+        both_confess_points = points if z[0:2] == ('both', 'confess')  else both_confess_points
+        one_confess_points = points if z[0:2] == ('one', 'confesses')  else one_confess_points
+        one_stay_silent_points = points if z[0:2] == ('one', 'stays silent')  else one_stay_silent_points
+        both_stay_silent_points = points if z[0:2] == ('both', 'stay silent')  else both_stay_silent_points
+    
     __scoring_matrix_ = { 
         (Choices.confess, Choices.confess)          : (both_confess_points, both_confess_points),
         (Choices.confess, Choices.stay_silent)      : (one_confess_points,  one_stay_silent_points),
