@@ -50,11 +50,29 @@ Rules = 'The rules have not been loaded!!'
 def Get_Score(p_choice, c_choice):
     return __scoring_matrix_[(p_choice, c_choice)]
 
+## read a generic text file, line by line
+##  the second argument below dictates what you can do with the file
+##  r = read only, w = truncate and write only, a = append (add to the end fo the file),
+##  w+ = truncate and open for reading and/or writing
+##  a+ = open for reading and appending
+with open('filename.txt', 'r') as myFile:
+    for line in myFile:
+        ## process the line 
+        print (line)
+        
 def Load():
     global Rules
     with open('README.md', 'r') as settings_file:
         Rules = __load_rules_(settings_file)
     __parse_rules(Rules)
+
+def __load_rules_(settings_file):
+    rules = ''
+    for line in settings_file:
+        if line[0:5] == '-----':
+            break;
+        rules += line
+    return rules
 
 def __parse_rules(rules):
     global __scoring_matrix_
@@ -83,12 +101,3 @@ def __parse_rules(rules):
         (Choices.stay_silent, Choices.stay_silent)  : (both_stay_silent_points, both_stay_silent_points) 
     }
     print(__scoring_matrix_)
-
-
-def __load_rules_(settings_file):
-    rules = ''
-    for line in settings_file:
-        if line[0:5] == '-----':
-            break;
-        rules += line
-    return rules
